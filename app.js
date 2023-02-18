@@ -5,6 +5,15 @@ const ecomUser = require("./db/ecomUser");
 app.use(bodyParser.json())
 const cors = require("cors")
 app.use(cors())
+
+app.use((req, res, next) => {
+    const allowedOrigins = ['https://ecom-front-taupe.vercel.app/login', 'http://localhost:3000',];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    return next();
+  });
 const { body, validationResult } = require('express-validator');
 const formatErr = (err) => {
     const errors = {}
